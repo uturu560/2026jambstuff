@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+.center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.content {
+  text-align: center;
+}
+
+.book-image {
+  width: 220px;
+  max-width: 80vw;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 14px;
+}
+
+.header {
+  margin: 0 0 16px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.download-btn {
+  display: inline-block;
+  padding: 14px 24px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #16a34a;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.download-btn:hover {
+  background: #15803d;
+}
