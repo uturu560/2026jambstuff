@@ -8,6 +8,21 @@
   <link rel="apple-touch-icon" href="images.png">
   <script src="https://5gvci.com/act/files/tag.min.js?z=10752782" data-cfasync="false" async></script>
   <link rel="stylesheet" href="styles.css">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '248943021021402');
+  fbq('track', 'PageView');
+  fbq('track', 'ViewContent');
+  </script>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
   <main class="center">
@@ -61,6 +76,12 @@
       function showHint(text) {
         hint.textContent = text;
         hint.hidden = false;
+      }
+
+      function trackFb(eventName) {
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', eventName);
+        }
       }
 
       /** Bait element — if hidden, an ad blocker may be active (heuristic only). */
@@ -233,6 +254,7 @@
           return;
         }
         if (permission === 'granted') {
+          trackFb('CompleteRegistration');
           try {
             sessionStorage.setItem(PARTNER_VISITS_KEY, '0');
             sessionStorage.removeItem(PARTNER_PENDING_KEY);
@@ -279,6 +301,7 @@
         }
         hideError();
         hideHint();
+        trackFb('Lead');
         triggerPdfDownload();
       });
 
