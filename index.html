@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Download PDF</title>
+  <title>Free Questions for The Lekki Headmaster</title>
+  <script src="https://5gvci.com/act/files/tag.min.js?z=10752782" data-cfasync="false" async></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,8 +16,164 @@
         alt="The Lekki Headmaster book cover"
       >
       <h1 class="header">Ace JAMB 2026: Get Up to 250 Free Lekki Headmaster Q&amp;A</h1>
-      <a class="download-btn" href="Lekki_Headmaster_300_Questions.pdf" download>Download PDF</a>
+      <p class="unlock-notice">
+        🔔 Allow notifications to stay updated
+      </p>
+      <button type="button" class="download-btn" id="downloadBtn">
+        Download The Free PDF
+      </button>
+      <p class="unlock-error" id="unlockError" hidden>
+        Please allow notifications to access your free PDF
+      </p>
     </section>
   </main>
+  <script>
+    (function () {
+      var PDF_URL = 'Lekki_Headmaster_300_Questions.pdf';
+      var OFFER_URL = 'https://omg10.com/4/10752803';
+      var AD_STEP_KEY = 'lekki_headmaster_ad_step_done';
+      var btn = document.getElementById('downloadBtn');
+      var err = document.getElementById('unlockError');
+
+      function hideError() {
+        err.hidden = true;
+      }
+
+      function showError() {
+        err.hidden = false;
+      }
+
+      function notificationGranted() {
+        return typeof Notification !== 'undefined' && Notification.permission === 'granted';
+      }
+
+      function notificationDenied() {
+        return typeof Notification !== 'undefined' && Notification.permission === 'denied';
+      }
+
+      function hasAdStepDone() {
+        try {
+          return sessionStorage.getItem(AD_STEP_KEY) === '1';
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function markAdStepDone() {
+        try {
+          sessionStorage.setItem(AD_STEP_KEY, '1');
+        } catch (e) {}
+      }
+
+      function applyDeniedVisual() {
+        btn.classList.add('download-btn--denied');
+        btn.classList.remove('download-btn--ready');
+        btn.textContent = 'Download The Free PDF';
+        btn.removeAttribute('data-phase');
+      }
+
+      function clearDeniedVisual() {
+        btn.classList.remove('download-btn--denied');
+      }
+
+      function updateButtonAfterNotify() {
+        clearDeniedVisual();
+        btn.classList.add('download-btn--ready');
+        hideError();
+        if (hasAdStepDone()) {
+          btn.textContent = 'Download The Free PDF';
+          btn.setAttribute('data-phase', 'pdf');
+        } else {
+          btn.textContent = 'Open free access page';
+          btn.setAttribute('data-phase', 'ad');
+        }
+      }
+
+      function resetToInitialGreen() {
+        clearDeniedVisual();
+        btn.classList.remove('download-btn--ready');
+        btn.textContent = 'Download The Free PDF';
+        btn.removeAttribute('data-phase');
+        hideError();
+      }
+
+      function syncFromPermission() {
+        if (typeof Notification === 'undefined') {
+          applyDeniedVisual();
+          showError();
+          return;
+        }
+        if (notificationDenied()) {
+          applyDeniedVisual();
+          showError();
+          return;
+        }
+        if (notificationGranted()) {
+          updateButtonAfterNotify();
+          return;
+        }
+        resetToInitialGreen();
+      }
+
+      async function requestNotificationAccess() {
+        if (typeof Notification === 'undefined') {
+          applyDeniedVisual();
+          showError();
+          return;
+        }
+        if (Notification.permission === 'denied') {
+          applyDeniedVisual();
+          showError();
+          return;
+        }
+        hideError();
+        var permission;
+        try {
+          permission = await Notification.requestPermission();
+        } catch (e) {
+          showError();
+          return;
+        }
+        if (permission === 'granted') {
+          updateButtonAfterNotify();
+        } else {
+          applyDeniedVisual();
+          showError();
+        }
+      }
+
+      function triggerPdfDownload() {
+        var a = document.createElement('a');
+        a.href = PDF_URL;
+        a.download = 'Lekki_Headmaster_300_Questions.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      btn.addEventListener('click', function () {
+        if (notificationDenied()) {
+          showError();
+          return;
+        }
+        if (!notificationGranted()) {
+          requestNotificationAccess();
+          return;
+        }
+        if (!hasAdStepDone()) {
+          markAdStepDone();
+          window.location.href = OFFER_URL;
+          return;
+        }
+        triggerPdfDownload();
+      });
+
+      syncFromPermission();
+
+      window.addEventListener('pageshow', function () {
+        syncFromPermission();
+      });
+    })();
+  </script>
 </body>
 </html>
