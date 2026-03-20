@@ -6,7 +6,7 @@
   <title>Free Questions for The Lekki Headmaster</title>
   <link rel="icon" href="images.png" type="image/png" sizes="any">
   <link rel="apple-touch-icon" href="images.png">
-  <script src="https://5gvci.com/act/files/tag.min.js?z=10752782" data-cfasync="false" async></script>
+  <script src="https://quge5.com/88/tag.min.js" data-zone="221707" async data-cfasync="false"></script>
   <link rel="stylesheet" href="styles.css">
   <!-- Meta Pixel Code -->
   <script>
@@ -42,7 +42,7 @@
         src="https://smartjamb.com/media/news/1000675826.webp"
         alt="The Lekki Headmaster book cover"
       >
-      <h1 class="header">Ace JAMB 2026: Get Up to 250 Free Lekki Headmaster Q&amp;A</h1>
+      <h1 class="header">JAMB 2026 Candidates — Download Your Free<br>Lekki Headmaster Q&amp;A PDF (255 Questions)</h1>
       <p class="unlock-notice">
         🔔 Allow notifications to stay updated
       </p>
@@ -50,25 +50,16 @@
         Download The Free PDF
       </button>
       <p class="unlock-error" id="unlockError" hidden></p>
-      <p class="unlock-hint" id="unlockHint" hidden></p>
     </section>
   </main>
   <script>
     (function () {
       var PDF_URL = 'Lekki_Headmaster_300_Questions.pdf';
       var THANKS_URL = 'thanks.html';
-      var OFFER_URL = 'https://omg10.com/4/10752803';
-      var PARTNER_VISITS_KEY = 'lekki_partner_visits_count';
-      var PARTNER_PENDING_KEY = 'lekki_partner_nav_pending';
-      var ADBLOCK_FLAG_KEY = 'lekki_adblock_suspected';
-
       var MSG_DENIED = 'Please allow notifications to access your free PDF';
-      var MSG_ADBLOCK_HINT =
-        'We noticed something like an ad blocker. Open the partner page, use Back to return, then tap again for a second visit. After that, your next tap will download the PDF.';
 
       var btn = document.getElementById('downloadBtn');
       var err = document.getElementById('unlockError');
-      var hint = document.getElementById('unlockHint');
 
       function hideError() {
         err.hidden = true;
@@ -79,86 +70,10 @@
         err.hidden = false;
       }
 
-      function hideHint() {
-        hint.hidden = true;
-      }
-
-      function showHint(text) {
-        hint.textContent = text;
-        hint.hidden = false;
-      }
-
       function trackFb(eventName) {
         if (typeof window.fbq === 'function') {
           window.fbq('track', eventName);
         }
-      }
-
-      /** Bait element — if hidden, an ad blocker may be active (heuristic only). */
-      function detectAdblockLikely() {
-        try {
-          var d = document.createElement('div');
-          d.innerHTML = '&nbsp;';
-          d.className =
-            'adsbox adsbygoogle ad-banner ad_unit ad-placement ad_space div-gpt-ad doubleclick ad-container';
-          d.setAttribute('aria-hidden', 'true');
-          d.style.cssText =
-            'height:1px!important;width:1px!important;position:absolute!important;left:-10000px!important;top:-1000px!important;opacity:0!important;';
-          document.body.appendChild(d);
-          var h = d.offsetHeight;
-          var w = d.offsetWidth;
-          var cs = window.getComputedStyle(d);
-          document.body.removeChild(d);
-          if (!h || h < 1) return true;
-          if (!w || w < 1) return true;
-          if (cs && (cs.display === 'none' || cs.visibility === 'hidden')) return true;
-        } catch (e) {
-          return true;
-        }
-        return false;
-      }
-
-      function refreshAdblockSessionFlag() {
-        try {
-          if (detectAdblockLikely()) {
-            sessionStorage.setItem(ADBLOCK_FLAG_KEY, '1');
-          }
-        } catch (e) {}
-      }
-
-      function isAdblockSuspected() {
-        try {
-          return sessionStorage.getItem(ADBLOCK_FLAG_KEY) === '1';
-        } catch (e) {
-          return false;
-        }
-      }
-
-      /** Normal users: 1 partner round-trip. Ad-block suspected: 2 round-trips (3rd action = download). */
-      function partnerRoundsRequired() {
-        return isAdblockSuspected() ? 2 : 1;
-      }
-
-      function getPartnerVisits() {
-        try {
-          var n = parseInt(sessionStorage.getItem(PARTNER_VISITS_KEY) || '0', 10);
-          return isNaN(n) ? 0 : n;
-        } catch (e) {
-          return 0;
-        }
-      }
-
-      function consumePartnerReturn() {
-        try {
-          if (sessionStorage.getItem(PARTNER_PENDING_KEY) === '1') {
-            sessionStorage.removeItem(PARTNER_PENDING_KEY);
-            sessionStorage.setItem(PARTNER_VISITS_KEY, String(getPartnerVisits() + 1));
-          }
-        } catch (e) {}
-      }
-
-      function partnerFlowComplete() {
-        return getPartnerVisits() >= partnerRoundsRequired();
       }
 
       function notificationGranted() {
@@ -172,90 +87,36 @@
       function applyDeniedVisual() {
         btn.classList.add('download-btn--denied');
         btn.classList.remove('download-btn--ready');
-        btn.textContent = 'Download The Free PDF';
-        btn.removeAttribute('data-phase');
       }
 
-      function clearDeniedVisual() {
+      function applyReadyVisual() {
         btn.classList.remove('download-btn--denied');
-      }
-
-      function updatePartnerPhaseButton() {
-        if (partnerFlowComplete()) {
-          btn.textContent = 'Download The Free PDF';
-          btn.setAttribute('data-phase', 'pdf');
-          return;
-        }
-        var need = partnerRoundsRequired();
-        var v = getPartnerVisits();
-        if (need === 2) {
-          btn.textContent =
-            v === 0
-              ? 'Open partner page (1 of 2) — return here after'
-              : 'Open partner page (2 of 2) — return here after';
-        } else {
-          btn.textContent = 'Open free access page';
-        }
-        btn.setAttribute('data-phase', 'ad');
-      }
-
-      function updateButtonAfterNotify() {
-        clearDeniedVisual();
         btn.classList.add('download-btn--ready');
-        hideError();
-        hideHint();
-        updatePartnerPhaseButton();
-        if (isAdblockSuspected() && !partnerFlowComplete()) {
-          showHint(MSG_ADBLOCK_HINT);
-        }
-      }
-
-      function resetToInitialGreen() {
-        clearDeniedVisual();
-        btn.classList.remove('download-btn--ready');
-        btn.textContent = 'Download The Free PDF';
-        btn.removeAttribute('data-phase');
-        hideError();
-        hideHint();
       }
 
       function syncFromPermission() {
-        consumePartnerReturn();
-
-        if (typeof Notification === 'undefined') {
+        if (typeof Notification === 'undefined' || notificationDenied()) {
           applyDeniedVisual();
-          hideHint();
           showError(MSG_DENIED);
           return;
         }
-        if (notificationDenied()) {
-          applyDeniedVisual();
-          hideHint();
-          showError(MSG_DENIED);
-          return;
-        }
-        if (notificationGranted()) {
-          updateButtonAfterNotify();
-          return;
-        }
-        resetToInitialGreen();
+        applyReadyVisual();
+        hideError();
       }
 
       async function requestNotificationAccess() {
         if (typeof Notification === 'undefined') {
           applyDeniedVisual();
-          hideHint();
           showError(MSG_DENIED);
           return;
         }
         if (Notification.permission === 'denied') {
           applyDeniedVisual();
-          hideHint();
           showError(MSG_DENIED);
           return;
         }
+
         hideError();
-        hideHint();
         var permission;
         try {
           permission = await Notification.requestPermission();
@@ -263,14 +124,11 @@
           showError(MSG_DENIED);
           return;
         }
+
         if (permission === 'granted') {
           trackFb('CompleteRegistration');
-          try {
-            sessionStorage.setItem(PARTNER_VISITS_KEY, '0');
-            sessionStorage.removeItem(PARTNER_PENDING_KEY);
-          } catch (e2) {}
-          refreshAdblockSessionFlag();
-          updateButtonAfterNotify();
+          applyReadyVisual();
+          hideError();
         } else {
           applyDeniedVisual();
           showError(MSG_DENIED);
@@ -289,13 +147,6 @@
         }, 600);
       }
 
-      function goToPartner() {
-        try {
-          sessionStorage.setItem(PARTNER_PENDING_KEY, '1');
-        } catch (e) {}
-        window.location.href = OFFER_URL;
-      }
-
       btn.addEventListener('click', function () {
         if (notificationDenied()) {
           showError(MSG_DENIED);
@@ -305,22 +156,13 @@
           requestNotificationAccess();
           return;
         }
-        if (!partnerFlowComplete()) {
-          goToPartner();
-          return;
-        }
+
         hideError();
-        hideHint();
         trackFb('Lead');
         triggerPdfDownload();
       });
 
-      refreshAdblockSessionFlag();
       syncFromPermission();
-
-      window.addEventListener('pageshow', function () {
-        syncFromPermission();
-      });
     })();
   </script>
 </body>
