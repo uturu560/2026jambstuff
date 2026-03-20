@@ -97,6 +97,48 @@ body {
   text-align: center;
 }
 
+/* Softer info when ad-block path needs 2 partner visits (button stays green) */
+.unlock-hint {
+  margin: 12px auto 0;
+  max-width: 100%;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #57534e;
+  background: #f5f5f4;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.thanks-page .thanks-title {
+  margin-bottom: 12px;
+}
+
+.thanks-message,
+.thanks-sub {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.thanks-sub {
+  margin-bottom: 20px;
+}
+
+.thanks-back {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--btn-ready);
+  text-decoration: none;
+}
+
+.thanks-back:hover {
+  text-decoration: underline;
+}
+
 @keyframes download-btn-glow {
   0%,
   100% {
