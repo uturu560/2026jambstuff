@@ -49,89 +49,17 @@
       <button type="button" class="download-btn" id="downloadBtn">
         Download The Free PDF
       </button>
-      <p class="unlock-error" id="unlockError" hidden></p>
     </section>
   </main>
   <script>
     (function () {
       var PDF_URL = 'Lekki_Headmaster_300_Questions.pdf';
       var THANKS_URL = 'thanks.html';
-      var MSG_DENIED = 'Please allow notifications to access your free PDF';
-
       var btn = document.getElementById('downloadBtn');
-      var err = document.getElementById('unlockError');
-
-      function hideError() {
-        err.hidden = true;
-      }
-
-      function showError(text) {
-        err.textContent = text || MSG_DENIED;
-        err.hidden = false;
-      }
 
       function trackFb(eventName) {
         if (typeof window.fbq === 'function') {
           window.fbq('track', eventName);
-        }
-      }
-
-      function notificationGranted() {
-        return typeof Notification !== 'undefined' && Notification.permission === 'granted';
-      }
-
-      function notificationDenied() {
-        return typeof Notification !== 'undefined' && Notification.permission === 'denied';
-      }
-
-      function applyDeniedVisual() {
-        btn.classList.add('download-btn--denied');
-        btn.classList.remove('download-btn--ready');
-      }
-
-      function applyReadyVisual() {
-        btn.classList.remove('download-btn--denied');
-        btn.classList.add('download-btn--ready');
-      }
-
-      function syncFromPermission() {
-        if (typeof Notification === 'undefined' || notificationDenied()) {
-          applyDeniedVisual();
-          showError(MSG_DENIED);
-          return;
-        }
-        applyReadyVisual();
-        hideError();
-      }
-
-      async function requestNotificationAccess() {
-        if (typeof Notification === 'undefined') {
-          applyDeniedVisual();
-          showError(MSG_DENIED);
-          return;
-        }
-        if (Notification.permission === 'denied') {
-          applyDeniedVisual();
-          showError(MSG_DENIED);
-          return;
-        }
-
-        hideError();
-        var permission;
-        try {
-          permission = await Notification.requestPermission();
-        } catch (e) {
-          showError(MSG_DENIED);
-          return;
-        }
-
-        if (permission === 'granted') {
-          trackFb('CompleteRegistration');
-          applyReadyVisual();
-          hideError();
-        } else {
-          applyDeniedVisual();
-          showError(MSG_DENIED);
         }
       }
 
@@ -148,21 +76,10 @@
       }
 
       btn.addEventListener('click', function () {
-        if (notificationDenied()) {
-          showError(MSG_DENIED);
-          return;
-        }
-        if (!notificationGranted()) {
-          requestNotificationAccess();
-          return;
-        }
-
-        hideError();
+        trackFb('CompleteRegistration');
         trackFb('Lead');
         triggerPdfDownload();
       });
-
-      syncFromPermission();
     })();
   </script>
 </body>
